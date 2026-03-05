@@ -16,8 +16,6 @@ class CostSection(BaseSection):
     """Renders the cost-benefit analysis section."""
 
     def _cost_table(self) -> list[Flowable]:
-        st = self.styles.get_styles()
-
         # Cost items are string-based, pulled from the strings dict
         cost_items: list[dict[str, str]] = []
         for i in range(1, 7):

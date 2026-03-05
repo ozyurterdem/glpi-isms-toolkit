@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from reportlab.lib.colors import HexColor, white
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-
 
 # ── Default Color Palette ────────────────────────────────────────
 DEFAULT_COLORS: dict[str, str] = {

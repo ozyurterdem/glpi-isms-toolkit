@@ -13,9 +13,8 @@ Usage::
 from __future__ import annotations
 
 import platform
-import sys
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from PIL import Image, ImageDraw, ImageFont
 

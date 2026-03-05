@@ -7,18 +7,18 @@ from functools import partial
 from pathlib import Path
 
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Flowable
+from reportlab.platypus import BaseDocTemplate, Flowable, Frame, PageTemplate
 
 from glpi_toolkit.core.config import ToolkitConfig
 from glpi_toolkit.reports.pdf.components import header_footer
-from glpi_toolkit.reports.pdf.styles import ReportStyles
+from glpi_toolkit.reports.pdf.sections.conclusion import ConclusionSection
+from glpi_toolkit.reports.pdf.sections.configurations import ConfigurationsSection
+from glpi_toolkit.reports.pdf.sections.cost import CostSection
 from glpi_toolkit.reports.pdf.sections.cover import CoverSection
 from glpi_toolkit.reports.pdf.sections.executive import ExecutiveSection
-from glpi_toolkit.reports.pdf.sections.configurations import ConfigurationsSection
 from glpi_toolkit.reports.pdf.sections.isms import ISMSSection
 from glpi_toolkit.reports.pdf.sections.iso27001 import ISO27001Section
-from glpi_toolkit.reports.pdf.sections.cost import CostSection
-from glpi_toolkit.reports.pdf.sections.conclusion import ConclusionSection
+from glpi_toolkit.reports.pdf.styles import ReportStyles
 
 PAGE_WIDTH, PAGE_HEIGHT = A4
 

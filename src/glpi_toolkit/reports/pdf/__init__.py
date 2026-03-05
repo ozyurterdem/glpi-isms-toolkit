@@ -6,10 +6,11 @@ from pathlib import Path
 
 import yaml
 
-from glpi_toolkit.core.config import ToolkitConfig, load_config
+from glpi_toolkit.core.config import load_config
 from glpi_toolkit.reports.pdf.builder import PDFReportBuilder
+from glpi_toolkit.reports.pdf.styles import ReportStyles
 
-__all__ = ["PDFReportBuilder", "generate_pdf"]
+__all__ = ["PDFReportBuilder", "ReportStyles", "generate_pdf"]
 
 
 def generate_pdf(

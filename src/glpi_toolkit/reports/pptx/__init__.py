@@ -36,14 +36,22 @@ def generate_pptx(
     """
     config = load_config(config_dir)
 
-    # templates/ lives at the project root, four levels above this file
-    templates_dir = Path(__file__).resolve().parent.parent.parent.parent / "templates"
-    strings_file = templates_dir / f"strings_{language}.yml"
+    # Resolve templates/ from config_dir parent (project root)
+    project_root = config_dir.resolve().parent
+    strings_file = project_root / "templates" / f"strings_{language}.yml"
     if not strings_file.is_file():
-        strings_file = templates_dir / "strings_en.yml"
+        strings_file = project_root / "templates" / "strings_en.yml"
+    if not strings_file.is_file():
+        # Fallback: try the package-relative path
+        pkg_root = Path(__file__).resolve().parent.parent.parent.parent
+        strings_file = pkg_root / "templates" / f"strings_{language}.yml"
+        if not strings_file.is_file():
+            strings_file = pkg_root / "templates" / "strings_en.yml"
 
-    with open(strings_file, encoding="utf-8") as f:
-        strings: dict[str, Any] = yaml.safe_load(f) or {}
+    strings: dict[str, Any] = {}
+    if strings_file.is_file():
+        with open(strings_file, encoding="utf-8") as f:
+            strings = yaml.safe_load(f) or {}
 
     builder = PresentationBuilder(config, strings, output_path.parent)
     return builder.build()

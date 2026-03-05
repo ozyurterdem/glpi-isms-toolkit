@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from pptx.util import Pt
 from pptx.dml.color import RGBColor
+from pptx.util import Pt
 
 __all__ = ["SlideTheme"]
 
@@ -103,7 +103,7 @@ class SlideTheme:
     font_family: str = "Calibri"
 
     @classmethod
-    def from_config(cls, branding: dict[str, str] | None = None) -> "SlideTheme":
+    def from_config(cls, branding: dict[str, str] | None = None) -> SlideTheme:
         """Create a theme, optionally overriding defaults with branding hex values."""
         overrides: dict[str, Any] = {}
         if branding:

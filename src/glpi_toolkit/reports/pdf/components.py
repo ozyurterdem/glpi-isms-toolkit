@@ -2,17 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Any, Sequence
+from typing import Any
 
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor
-from reportlab.lib.units import mm, cm
-from reportlab.platypus import Paragraph, Table, TableStyle, Flowable
-from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.platypus import Paragraph, Table, TableStyle
 
 from glpi_toolkit.reports.pdf.styles import ReportColors, ReportStyles
-
 
 PAGE_WIDTH, PAGE_HEIGHT = A4
 

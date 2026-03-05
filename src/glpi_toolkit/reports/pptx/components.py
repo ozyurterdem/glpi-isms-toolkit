@@ -7,13 +7,13 @@ theme while this module remains stateless.
 
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.oxml.ns import qn
 from pptx.slide import Slide
-from pptx.util import Cm, Pt, Emu
+from pptx.util import Cm, Pt
 
 from .theme import SlideTheme
 
@@ -100,12 +100,12 @@ def add_bullet_list(
         p.level = 0
         p.space_after = Pt(4)
 
-        # Bullet character
-        pPr = p._pPr
-        if pPr is None:
-            pPr = p._p.get_or_add_pPr()
-        buChar = pPr.makeelement(qn("a:buChar"), {"char": "\u2022"})
-        pPr.append(buChar)
+        # Bullet character (names match python-pptx XML API)
+        p_pr = p._pPr  # noqa: N806
+        if p_pr is None:
+            p_pr = p._p.get_or_add_pPr()
+        bu_char = p_pr.makeelement(qn("a:buChar"), {"char": "\u2022"})
+        p_pr.append(bu_char)
 
         run = p.runs[0]
         run.font.size = Pt(font_size)

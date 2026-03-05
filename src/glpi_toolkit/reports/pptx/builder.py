@@ -18,15 +18,15 @@ from pptx.util import Cm
 
 from glpi_toolkit.core.config import ToolkitConfig
 
-from .theme import SlideTheme
 from .components import (
-    set_slide_bg,
-    add_text_box,
     add_bullet_list,
-    add_table,
-    add_section_header,
     add_kpi_card,
+    add_section_header,
+    add_table,
+    add_text_box,
+    set_slide_bg,
 )
+from .theme import SlideTheme
 
 # Widescreen 16:9 dimensions
 _SLIDE_WIDTH = Cm(33.867)

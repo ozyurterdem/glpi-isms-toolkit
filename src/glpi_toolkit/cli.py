@@ -7,9 +7,7 @@ Uses Typer for argument parsing and Rich for formatted console output.
 from __future__ import annotations
 
 import shutil
-import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 import yaml
@@ -83,7 +81,7 @@ def _version_callback(value: bool) -> None:
 
 @app.callback()
 def main(
-    version: Optional[bool] = typer.Option(
+    version: bool | None = typer.Option(
         None,
         "--version",
         "-v",
@@ -119,7 +117,7 @@ def report(
         "-o",
         help="Output directory for generated reports.",
     ),
-    lang: Optional[str] = typer.Option(
+    lang: str | None = typer.Option(
         None,
         "--lang",
         "-l",
@@ -194,7 +192,7 @@ def iso_audit(
         "-c",
         help="Path to the config directory.",
     ),
-    output: Optional[Path] = typer.Option(
+    output: Path | None = typer.Option(
         None,
         "--output",
         "-o",
@@ -362,7 +360,7 @@ def init(
         }
         with open(config_dir / "company.yml", "w", encoding="utf-8") as f:
             yaml.dump(company_config, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
-        console.print(f"  [green]Created:[/green] config/company.yml")
+        console.print("  [green]Created:[/green] config/company.yml")
 
     # Patch the company name into the copied file
     company_yml = config_dir / "company.yml"

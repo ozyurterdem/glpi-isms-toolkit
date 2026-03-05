@@ -2,8 +2,8 @@
 
 from glpi_toolkit.core.config import (
     CompanyConfig,
-    SLAConfig,
     SecurityConfig,
+    SLAConfig,
     ToolkitConfig,
     load_config,
 )

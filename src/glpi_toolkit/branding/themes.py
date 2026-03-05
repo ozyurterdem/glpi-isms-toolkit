@@ -7,8 +7,6 @@ fallback to ``"dark"``.
 
 from __future__ import annotations
 
-from typing import Any
-
 THEMES: dict[str, dict[str, str]] = {
     # ── Dark (default) ────────────────────────────────────────────────
     "dark": {
