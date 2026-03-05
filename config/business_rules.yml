@@ -1,0 +1,89 @@
+# ── Automatic Business Rules ──────────────────────────────────
+# Rules that auto-assign SLA, priority, and group when a ticket is created.
+
+rules:
+  - name: "Critical incident → Critical SLA"
+    condition:
+      priority: "critical"
+    action:
+      sla: "critical"
+      notify_management: true
+
+  - name: "Server incident → System Administration"
+    condition:
+      category: "Server"
+    action:
+      assigned_group: "System Administration"
+      priority: "critical"
+
+  - name: "Network incident → Network Management"
+    condition:
+      category_parent: "Network Equipment"
+    action:
+      assigned_group: "Network Management"
+      priority: "high"
+
+  - name: "Security incident → Critical SLA + Security group"
+    condition:
+      category_parent: "Information Security"
+    action:
+      assigned_group: "Security"
+      sla: "critical"
+      notify_management: true
+
+  - name: "Data breach → Critical SLA + Management alert"
+    condition:
+      category: "Data Breach Report"
+    action:
+      sla: "critical"
+      priority: "critical"
+      notify_management: true
+
+  - name: "User lifecycle → System Administration"
+    condition:
+      category_parent: "User Lifecycle"
+    action:
+      assigned_group: "System Administration"
+
+  - name: "Onboarding/Offboarding → Normal SLA (planned work)"
+    condition:
+      category:
+        - "New Employee Onboarding"
+        - "Employee Offboarding"
+    action:
+      sla: "normal"
+
+  - name: "Password policy violation → High priority"
+    condition:
+      category: "Password Policy Violation"
+    action:
+      priority: "high"
+      assigned_group: "Security"
+
+  - name: "Hardware request → Low priority"
+    condition:
+      category: "Hardware Request"
+    action:
+      priority: "low"
+      sla: "low"
+
+  - name: "Software request → Low priority"
+    condition:
+      category: "Software Installation"
+    action:
+      priority: "low"
+      sla: "low"
+
+  - name: "Access review → Security group"
+    condition:
+      category: "Access Rights Review"
+    action:
+      assigned_group: "Security"
+      sla: "normal"
+
+  - name: "VPN issue → High priority"
+    condition:
+      category: "VPN / Remote Access Issue"
+    action:
+      priority: "high"
+      assigned_group: "Network Management"

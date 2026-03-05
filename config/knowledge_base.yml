@@ -1,0 +1,56 @@
+# ── Knowledge Base Articles ───────────────────────────────────
+# Articles are organized by category. Each article has a title,
+# a brief summary, and optionally an ISMS document reference.
+
+categories:
+  - name: "ISMS Guides"
+    articles:
+      - title: "Password Policy User Guide"
+        summary: "How to create strong passwords, expiry rules, and what to do if locked out."
+        isms_ref: "ISMS-POL-002"
+      - title: "Information Security Policy Overview"
+        summary: "Employee-friendly summary of the organization's security policy."
+        isms_ref: "ISMS-POL-001"
+      - title: "Clean Desk / Clean Screen Rules"
+        summary: "Guidelines for securing your workspace when away."
+        isms_ref: "ISMS-POL-001"
+      - title: "Acceptable Use Policy"
+        summary: "Rules for using company IT resources, internet, and email."
+        isms_ref: "ISMS-POL-001"
+      - title: "Security Incident Reporting Guide"
+        summary: "When, how, and to whom to report a security incident."
+        isms_ref: "ISMS-POL-001"
+      - title: "Data Classification Guide"
+        summary: "How to classify information: Confidential, Internal, Public."
+        isms_ref: "ISMS-POL-001"
+
+  - name: "Security Awareness"
+    articles:
+      - title: "Mobile Device Security"
+        summary: "Rules for using smartphones and tablets with company data."
+      - title: "USB and Removable Media Policy"
+        summary: "Restrictions and safe practices for external storage devices."
+      - title: "Email Security and Phishing Awareness"
+        summary: "How to identify phishing emails and report suspicious messages."
+      - title: "Remote Work / VPN Security"
+        summary: "Best practices for secure remote access to company systems."
+
+  - name: "IT Procedures"
+    articles:
+      - title: "New Employee IT Onboarding"
+        summary: "Step-by-step IT setup guide for new hires."
+        isms_ref: "ISMS-PRO-002"
+      - title: "Employee Offboarding Checklist"
+        summary: "IT deprovisioning steps when an employee leaves."
+        isms_ref: "ISMS-PRO-002"
+
+  - name: "User Guides"
+    articles:
+      - title: "How to Submit a Support Ticket"
+        summary: "Step-by-step guide to creating a helpdesk ticket."
+      - title: "WiFi Connection Guide"
+        summary: "How to connect to corporate and guest wireless networks."
+      - title: "VPN Connection Guide"
+        summary: "How to establish a VPN connection for remote access."
+      - title: "Printer Setup Guide"
+        summary: "How to install and configure network printers."

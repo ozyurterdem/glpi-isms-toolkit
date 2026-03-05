@@ -1,0 +1,63 @@
+# ── SLA / OLA Configuration ───────────────────────────────────
+# Based on ITIL v4 global standards (maximum thresholds).
+# Adjust response/resolution times to match your organization's capacity.
+
+sla:
+  standard: "itil_v4"
+
+  levels:
+    critical:
+      name: "Critical (P1)"
+      response: "1h"
+      resolution: "8h"
+      examples:
+        - "Server crash"
+        - "Production system (MES/ERP) down"
+        - "Full network outage"
+        - "Data breach / security incident"
+
+    high:
+      name: "High (P2)"
+      response: "4h"
+      resolution: "24h"
+      examples:
+        - "Printer failure"
+        - "VPN connectivity issue"
+        - "Departmental network outage"
+        - "Security event"
+
+    normal:
+      name: "Normal (P3)"
+      response: "8h"
+      resolution: "3d"
+      examples:
+        - "Software installation"
+        - "Password reset"
+        - "New employee onboarding"
+        - "Permission change"
+
+    low:
+      name: "Low (P4)"
+      response: "24h"
+      resolution: "5d"
+      examples:
+        - "Hardware request"
+        - "Access level change"
+        - "Temporary account request"
+        - "Documentation update"
+
+ola:
+  response: "4h"
+  resolution: "16h"
+  description: "Internal team operational targets"
+
+calendar:
+  name: "Business Hours"
+  workdays: ["monday", "tuesday", "wednesday", "thursday", "friday"]
+  hours:
+    start: "08:00"
+    end: "18:00"
+  saturday:
+    enabled: true
+    start: "08:00"
+    end: "13:00"

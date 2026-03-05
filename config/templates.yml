@@ -1,0 +1,169 @@
+# ── Ticket Templates ──────────────────────────────────────────
+# Pre-defined templates that auto-fill priority, group, and description fields.
+# Users select a template when creating a ticket for fast, consistent intake.
+
+templates:
+  # ── Incident Templates ──────────────────────────────────────
+  - name: "Network / Internet Outage"
+    category: "Network / Internet"
+    priority: "high"
+    assigned_group: "Network Management"
+    type: "incident"
+
+  - name: "Computer Failure"
+    category: "Computer"
+    priority: "normal"
+    assigned_group: "End User Support"
+    type: "incident"
+
+  - name: "Printer Failure"
+    category: "Printer"
+    priority: "normal"
+    assigned_group: "End User Support"
+    type: "incident"
+
+  - name: "Production Software (MES/ERP)"
+    category: "Software (MES/ERP)"
+    priority: "high"
+    assigned_group: "Production IT"
+    type: "incident"
+
+  - name: "Server Failure"
+    category: "Server"
+    priority: "critical"
+    assigned_group: "System Administration"
+    type: "incident"
+
+  - name: "Phone / VoIP Issue"
+    category: "Phone / VoIP"
+    priority: "normal"
+    assigned_group: "Network Management"
+    type: "incident"
+
+  - name: "Email Issue"
+    category: "Email Issue"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "incident"
+
+  - name: "Firewall Rule Request"
+    category: "Firewall"
+    priority: "high"
+    assigned_group: "Security"
+    type: "incident"
+
+  - name: "VPN / Remote Access Issue"
+    category: "Network / Internet"
+    priority: "high"
+    assigned_group: "Network Management"
+    type: "incident"
+
+  # ── Request Templates ───────────────────────────────────────
+  - name: "New User Account"
+    category: "New User Account"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "request"
+
+  - name: "Password Reset"
+    category: "Password Reset"
+    priority: "low"
+    assigned_group: "End User Support"
+    type: "request"
+
+  - name: "Software Installation"
+    category: "Software Installation"
+    priority: "low"
+    assigned_group: "End User Support"
+    type: "request"
+
+  - name: "Hardware Request"
+    category: "Hardware Request"
+    priority: "low"
+    assigned_group: "IT Department"
+    type: "request"
+
+  - name: "Permission / Access Request"
+    category: "Permission / Access Request"
+    priority: "normal"
+    assigned_group: "Security"
+    type: "request"
+
+  # ── Security Templates (ISMS-POL-001) ───────────────────────
+  - name: "Security Incident Report"
+    category: "Security Incident Report"
+    priority: "critical"
+    assigned_group: "Security"
+    type: "incident"
+    isms_ref: "ISMS-POL-001"
+
+  - name: "Data Breach Report"
+    category: "Data Breach Report"
+    priority: "critical"
+    assigned_group: "Security"
+    type: "incident"
+    isms_ref: "ISMS-POL-001"
+
+  - name: "Password Policy Violation"
+    category: "Password Policy Violation"
+    priority: "high"
+    assigned_group: "Security"
+    type: "incident"
+    isms_ref: "ISMS-POL-002"
+
+  - name: "Security Audit Finding"
+    category: "Policy Violation"
+    priority: "high"
+    assigned_group: "Security"
+    type: "incident"
+    isms_ref: "ISMS-POL-001"
+
+  # ── Lifecycle Templates (ISMS-PRO-002) ──────────────────────
+  - name: "New Employee Onboarding"
+    category: "New Employee Onboarding"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "request"
+    isms_ref: "ISMS-PRO-002"
+    checklist:
+      - "Create AD/directory account"
+      - "Create email account"
+      - "Assign PC/laptop from inventory"
+      - "Set permissions based on role"
+      - "ISMS orientation and policy signing"
+      - "Add to relevant distribution groups"
+
+  - name: "Employee Offboarding"
+    category: "Employee Offboarding"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "request"
+    isms_ref: "ISMS-PRO-002"
+    checklist:
+      - "Deactivate AD/directory account"
+      - "Set email forwarding"
+      - "Revoke VPN access"
+      - "Collect hardware (laptop, badge, phone)"
+      - "Remove from shared drives and groups"
+      - "Archive user data per retention policy"
+
+  - name: "Position / Department Change"
+    category: "Position / Department Change"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "request"
+    isms_ref: "ISMS-PRO-002"
+
+  - name: "Access Rights Review"
+    category: "Access Rights Review"
+    priority: "normal"
+    assigned_group: "Security"
+    type: "request"
+    isms_ref: "ISMS-PRO-002"
+
+  - name: "Temporary Account Request"
+    category: "Temporary / Intern Account"
+    priority: "normal"
+    assigned_group: "System Administration"
+    type: "request"
+    isms_ref: "ISMS-PRO-002"

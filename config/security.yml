@@ -1,0 +1,63 @@
+# ── Security Configuration ────────────────────────────────────
+# Maps to ISMS-POL-002 (Password Policy) and ISMS-POL-001 (Security Policy).
+# These values are applied to GLPI's internal security settings.
+
+password_policy:
+  isms_ref: "ISMS-POL-002"
+  min_length: 10
+  require_uppercase: true
+  require_lowercase: true
+  require_number: true
+  require_symbol: true
+  expiry_days: 90
+  expiry_warning_days: 15
+  expiry_lock_days: 30
+  force_change_on_first_login: true
+
+account_lockout:
+  isms_ref: "ISMS-POL-002"
+  max_attempts: 5
+  lockout_minutes: 30
+
+session:
+  timeout_minutes: 30
+  description: "Auto-logout after inactivity"
+
+# ── RBAC Profiles ─────────────────────────────────────────────
+# Maps to ISO 27001 A.5.15 (Access Control) and A.5.3 (Segregation of Duties).
+profiles:
+  - name: "Self-Service"
+    description: "Can only create and view own tickets"
+    is_default: true
+    permissions:
+      tickets: "own"
+      assets: "none"
+      admin: false
+
+  - name: "Technician"
+    description: "Resolve tickets, read asset inventory"
+    permissions:
+      tickets: "assigned"
+      assets: "read"
+      admin: false
+
+  - name: "Supervisor"
+    description: "All tickets, reports, statistics"
+    permissions:
+      tickets: "all"
+      assets: "read"
+      admin: false
+
+  - name: "Admin"
+    description: "Full access including configuration"
+    permissions:
+      tickets: "all"
+      assets: "write"
+      admin: true
+
+  - name: "Auditor"
+    description: "Read-only access for ISO audits"
+    permissions:
+      tickets: "all_readonly"
+      assets: "read"
+      admin: false

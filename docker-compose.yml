@@ -1,0 +1,62 @@
+##############################################################################
+#  GLPI ISMS Toolkit — Docker Stack
+#
+#  Services:
+#    - glpi-db   : MariaDB database
+#    - glpi-app  : GLPI ITSM platform (port 80)
+#
+#  Usage:
+#    cp .env.example .env   # fill in passwords
+#    docker compose up -d
+##############################################################################
+
+services:
+
+  # ─── MariaDB ─────────────────────────────────────────────────
+  glpi-db:
+    image: mariadb:10.11
+    container_name: glpi-db
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${GLPI_DB_ROOT_PASSWORD:?Set GLPI_DB_ROOT_PASSWORD in .env}
+      MYSQL_DATABASE: glpi
+      MYSQL_USER: glpi
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD:?Set GLPI_DB_PASSWORD in .env}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - glpi-net
+
+  # ─── GLPI Application ───────────────────────────────────────
+  glpi-app:
+    image: diouxx/glpi:latest
+    container_name: glpi-app
+    restart: unless-stopped
+    ports:
+      - "${GLPI_PORT:-80}:80"
+    volumes:
+      - glpi-data:/var/www/html/glpi
+      - glpi-files:/var/www/html/glpi/files
+      - glpi-plugins:/var/www/html/glpi/plugins
+    environment:
+      TIMEZONE: ${GLPI_TIMEZONE:-Europe/Istanbul}
+    depends_on:
+      glpi-db:
+        condition: service_healthy
+    networks:
+      - glpi-net
+
+volumes:
+  db-data:
+  glpi-data:
+  glpi-files:
+  glpi-plugins:
+
+networks:
+  glpi-net:
+    driver: bridge

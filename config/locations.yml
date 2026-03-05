@@ -1,0 +1,38 @@
+# ── Location Hierarchy ────────────────────────────────────────
+# Physical location structure for asset tracking.
+# Customize zones and rooms to match your facility layout.
+
+locations:
+  - zone: "Production"
+    rooms:
+      - "CNC Workshop"
+      - "Assembly"
+      - "Welding"
+      - "Paint Shop"
+      - "Turning / Milling"
+      - "Quality Control"
+
+  - zone: "Office"
+    rooms:
+      - "Management"
+      - "Accounting"
+      - "Procurement"
+      - "Human Resources"
+      - "Engineering"
+      - "Sales & Marketing"
+      - "IT Department"
+      - "Meeting Room"
+
+  - zone: "Support"
+    rooms:
+      - "Server Room"
+      - "Maintenance"
+      - "Cafeteria"
+      - "Security / Entrance"
+
+  - zone: "Warehouse"
+    rooms:
+      - "Raw Materials"
+      - "Finished Goods"
+      - "Spare Parts"
+      - "Shipping"

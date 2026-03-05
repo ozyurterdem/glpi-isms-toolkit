@@ -1,0 +1,276 @@
+# ── Turkce Rapor Metinleri ─────────────────────────────────────────────────
+# PDF / PPTX raporlarinda kullanilan tum metinler.
+# Yer tutucular: {company_name}, {date}, {version}, {author} vb.
+# Anahtarlar strings_en.yml ile birebir eslesmelidir.
+
+cover:
+  title: "BT Hizmet Yonetimi ve Bilgi Guvenligi Raporu"
+  subtitle: "ISO 27001 Uyumlu GLPI ITSM Uygulamasi"
+  prepared_for: "{company_name} icin hazirlanmistir"
+  prepared_by: "Hazirlayan: {author}"
+  date_label: "Tarih: {date}"
+  version_label: "Surum: {version}"
+  confidentiality: "GIZLI — Yalnizca kurum ici kullanim icin"
+  disclaimer: "Bu belge {company_name} sirketine ait ozel bilgiler icermektedir. Izinsiz dagitimi yasaktir."
+
+toc:
+  title: "Icindekiler"
+  executive_summary: "Yonetici Ozeti"
+  scope: "Kapsam ve Hedefler"
+  system_overview: "Sistem Genel Bakisi"
+  configurations: "GLPI Yapilandirmalari"
+  isms: "Bilgi Guvenligi Yonetimi"
+  network: "Ag ve Altyapi"
+  iso27001: "ISO 27001 Uyumlulugu"
+  value: "Is Degeri ve Yatirim Getirisi"
+  cost: "Maliyet Analizi"
+  conclusion: "Sonuc ve Oneriler"
+  appendix: "Ekler"
+
+executive_summary:
+  title: "Yonetici Ozeti"
+  intro: >
+    Bu rapor, {company_name} icin acik kaynakli ve ITIL uyumlu bir
+    platform olan GLPI kullanilarak gerceklestirilen BT Hizmet Yonetimi
+    (ITSM) uygulamasini sunmaktadir. Sistem; varlik yonetimi, yardim
+    masasi operasyonlari ve ISO 27001:2022 standartlarina uyumlu bilgi
+    guvenligi gereksinimlerini karsilayacak sekilde yapilandirilmistir.
+  highlights_title: "Temel Basarilar"
+  highlight_itsm: "{sla_count} katmanli SLA yapisina sahip tam ITIL v4 uyumlu hizmet masasi"
+  highlight_itam: "{asset_type_count} varlik kategorisini kapsayan kapsamli BT varlik yonetimi"
+  highlight_isms: "Ek A kontrol kapsaminin %{coverage_pct} oraninda karsilandigi ISO 27001:2022 uyumu"
+  highlight_rbac: "{profile_count} guvenlik profili ile rol tabanli erisim kontrolu"
+  highlight_auto: "Olay yonetimi ve kullanici yasam dongusu icin otomatik is akislari"
+  conclusion: >
+    Bu uygulama, {company_name} sirketine ticari alternatiflerin maliyetinin
+    cok altinda, hem gunluk operasyonlari hem de uyumluluk gereksinimlerini
+    destekleyen kurumsal duzeyde bir BT yonetim platformu saglamaktadir.
+
+scope:
+  title: "Kapsam ve Hedefler"
+  intro: >
+    Bu uygulamanin kapsami, hizmet yonetimi, varlik takibi ve bilgi
+    guvenligi kontrolleri dahil olmak uzere {company_name} sirketinin
+    tum BT operasyonlarini icerir.
+  objectives_title: "Proje Hedefleri"
+  obj_centralize: "BT hizmet taleplerini tek bir platform uzerinden merkezilestirmek"
+  obj_asset: "Eksiksiz bir donanim ve yazilim varlik envanteri olusturmak"
+  obj_sla: "Hizmet sunumu icin olculebilir SLA hedefleri belirlemek"
+  obj_isms: "Bilgi guvenligi yonetim cercevesi olusturmak"
+  obj_compliance: "ISO 27001:2022 gereksinimlerine uyum saglamak"
+  obj_reporting: "Raporlama araciligiyla veriye dayali BT karar alma surecini etkinlestirmek"
+  coverage_title: "Kapsam Alanlari"
+  coverage_helpdesk: "Yardim masasi ve olay yonetimi"
+  coverage_asset: "BT varlik yonetimi (ITAM)"
+  coverage_change: "Degisiklik ve problem yonetimi"
+  coverage_security: "Bilgi guvenligi yonetimi (BGYS)"
+  coverage_knowledge: "Bilgi bankasi yonetimi"
+  coverage_reporting: "Raporlama ve analitik"
+
+system:
+  title: "Sistem Genel Bakisi"
+  intro: >
+    GLPI (Gestionnaire Libre de Parc Informatique), {company_name}
+    sirketinin merkezi ITSM platformu olarak konuslandirilmistir.
+    Sistem; entegre yardim masasi, varlik yonetimi ve yonetimsel
+    yetenekler sunmaktadir.
+  architecture_title: "Sistem Mimarisi"
+  arch_platform: "Platform: GLPI {glpi_version} (Acik Kaynak, GPL v3)"
+  arch_database: "Veritabani: Otomatik yedekleme ile MariaDB / MySQL"
+  arch_hosting: "Barindirma: Konteyner izolasyonlu yerel Docker kurulumu"
+  arch_access: "Erisim: Tum sirket cihazlarindan erisilebilen web tabanli arayuz"
+  arch_agent: "Ajan: Otomatik donanim/yazilim envanteri icin GLPI Agent"
+  arch_api: "API: Entegrasyon ve otomasyon icin RESTful API"
+  users_title: "Kullanici Yapisi"
+  users_intro: >
+    Sistem, en az yetki ilkesini uygulayan rol tabanli erisim kontrolu
+    (RBAC) modeli ile yapilandirilmistir. Her kullaniciya erisim
+    duzeyini belirleyen bir profil atanir.
+  profiles_title: "Guvenlik Profilleri"
+
+configurations:
+  title: "GLPI Yapilandirmalari"
+  intro: >
+    Asagidaki bolumler, {company_name} icin GLPI'ye uygulanan ozel
+    yapilandirmalari detaylandirmaktadir. Tum ayarlar ITIL en iyi
+    uygulamalari ve ISO 27001 guvenlik gereksinimlerini takip eder.
+  categories_title: "Hizmet Kategorileri"
+  categories_intro: >
+    Talep kategorileri, ITIL hizmet kategorileriyle eslesen ve uygun
+    destek grubuna otomatik yonlendirmeyi destekleyen hiyerarsik bir
+    yapida duzenlenmistir.
+  sla_title: "Hizmet Seviyesi Anlasmalari"
+  sla_intro: >
+    SLA hedefleri, ITIL v4 kuresel standartlarina dayanmakta olup
+    {company_name} sirketinin operasyonel kapasitesine gore
+    uyarlanmistir.
+  sla_header_priority: "Oncelik"
+  sla_header_response: "Yanit"
+  sla_header_resolution: "Cozum"
+  sla_header_examples: "Ornek Senaryolar"
+  assets_title: "Varlik Yonetimi"
+  assets_intro: >
+    Varlik yonetimi modulu, tum donanim ve yazilimlari satin almadan
+    elden cikarmaya kadar tum yasam dongusu boyunca takip eder.
+  asset_states_title: "Varlik Yasam Dongusu Durumlari"
+  asset_types_title: "Takip Edilen Varlik Turleri"
+  locations_title: "Konum Hiyerarsisi"
+  locations_intro: >
+    Fiziksel konumlar, dogru varlik takibi ve fiziksel guvenlik
+    yonetimi icin bolge tabanli bir hiyerarsik yapida duzenlenmistir.
+
+isms:
+  title: "Bilgi Guvenligi Yonetimi"
+  intro: >
+    {company_name}, GLPI ile entegre bir Bilgi Guvenligi Yonetim
+    Sistemi (BGYS) isletmektedir. Cerceve, ISO 27001:2022 ile uyumlu
+    olup belgelenmis politikalar, prosedurler ve teknik kontroller
+    icermektedir.
+  framework_title: "BGYS Cercevesi"
+  framework_intro: >
+    BGYS cercevesi; uc katmanli bir dokumantasyon hiyerarsisinde
+    duzenlenmis politikalar, prosedurler ve calisma talimatlari
+    icerir.
+  policies_title: "Guvenlik Politikalari"
+  policy_main: "BGYS-POL-001 — Bilgi Guvenligi Politikasi"
+  policy_password: "BGYS-POL-002 — Parola ve Kimlik Dogrulama Politikasi"
+  procedures_title: "Guvenlik Prosedurleri"
+  proc_onboarding: "BGYS-PRO-001 — Olay Yonetimi Proseduru"
+  proc_lifecycle: "BGYS-PRO-002 — Kullanici Yasam Dongusu Yonetimi Proseduru"
+  password_title: "Parola Politikasi"
+  password_intro: >
+    Kimlik dogrulama kontrolleri, ISO 27001 A.5.17 ve A.8.5
+    uyumlu olarak guclu parola gereksinimlerini zorunlu kilar.
+  password_min_length: "Minimum uzunluk: {min_length} karakter"
+  password_complexity: "Karmasiklik: buyuk harf, kucuk harf, rakam ve sembol zorunlu"
+  password_expiry: "Sure dolumu: her {expiry_days} gunde bir, {warning_days} gun onceden uyari"
+  password_lockout: "Kilitleme: {max_attempts} basarisiz denemeden sonra {lockout_minutes} dakika"
+  password_first_login: "Ilk giris: zorunlu parola degisikligi"
+  rbac_title: "Erisim Kontrolu (RBAC)"
+  rbac_intro: >
+    Rol tabanli erisim kontrolu, gorevler ayrimi ilkesini zorunlu
+    kilar. Kullanicilara rolleri icin gereken minimum yetkiler atanir.
+
+network:
+  title: "Ag ve Altyapi"
+  intro: >
+    Bu bolum, {company_name} icin GLPI araciligiyla yonetilen ag
+    mimarisini ve altyapi bilesenlerini belgelemektedir.
+  topology_title: "Ag Topolojisi"
+  topology_intro: >
+    Ag, kritik sistemleri genel kullanici trafiginden ve misafir
+    erisiminden izole etmek icin VLAN'lar ile segmente edilmistir.
+  vlan_title: "VLAN Segmentasyonu"
+  vlan_header_id: "VLAN ID"
+  vlan_header_name: "Ad"
+  vlan_header_subnet: "Alt Ag"
+  vlan_header_purpose: "Amac"
+  equipment_title: "Ag Ekipmanlari"
+  equipment_intro: >
+    Tum ag ekipmanlari; yapilandirma kayitlari, urun yazilimi
+    surumler ve bakim takvimleri ile birlikte GLPI'de envanterlenmistir.
+
+iso27001:
+  title: "ISO 27001:2022 Uyumlulugu"
+  intro: >
+    Bu bolum, {company_name} sirketinin GLPI uygulamasi ile ISO
+    27001:2022 Ek A kontrol cercevesi arasindaki eslesmeyi sunmaktadir.
+    Kapsam analizi, mevcut yapilandirmadaki kontrol tanimlarina
+    dayanmaktadir.
+  summary_title: "Kapsam Ozeti"
+  summary_intro: >
+    Asagidaki tablo, ISO 27001:2022'de tanimlanan dort kontrol
+    kategorisindeki mevcut uyumluluk durumunu gostermektedir.
+  header_category: "Kategori"
+  header_total: "Toplam"
+  header_covered: "Karsilanan"
+  header_partial: "Kismi"
+  header_gaps: "Eksik"
+  header_coverage: "Kapsam"
+  organizational: "Organizasyonel Kontroller (A.5)"
+  people: "Kisi Kontrolleri (A.6)"
+  physical: "Fiziksel Kontroller (A.7)"
+  technological: "Teknolojik Kontroller (A.8)"
+  overall_label: "Genel Uyumluluk"
+  covered_title: "Karsilanan Kontroller"
+  covered_intro: >
+    Asagidaki kontroller, mevcut GLPI yapilandirmasi ve destekleyici
+    BGYS dokumantasyonu tarafindan tam olarak karsilanmaktadir.
+  gaps_title: "Bosluk Analizi"
+  gaps_intro: >
+    Asagidaki kontroller henuz karsilanmamis veya yalnizca kismi
+    olarak ele alinmistir. Bunlar, bir sonraki uygulama asamasinda
+    iyilestirme alanlarini temsil etmektedir.
+  recommendations_title: "Oneriler"
+  rec_phase1: "Asama 1: Yuksek oncelikli organizasyonel kontrolleri ele alin (A.5.4 — A.5.8)"
+  rec_phase2: "Asama 2: Egitim ve farkindalik icin kisi kontrollerini uygulayin (A.6.3, A.6.6 — A.6.8)"
+  rec_phase3: "Asama 3: Fiziksel guvenlik kontrollerini guclandirin (A.7.2 — A.7.14)"
+  rec_phase4: "Asama 4: Tam kapsam icin kalan teknolojik kontrolleri devreye alin"
+
+value:
+  title: "Is Degeri ve Yatirim Getirisi"
+  intro: >
+    Bu bolum, {company_name} icin GLPI ITSM uygulamasinin sagladigi
+    is degerini nicellestirmektedir.
+  benefits_title: "Temel Faydalar"
+  benefit_visibility: "Tum departmanlarda eksiksiz BT varlik gorunurlugu"
+  benefit_response: "Olculen SLA performansi ile daha hizli olay mudahalesi"
+  benefit_compliance: "ISO 27001 sertifikasyonu icin belgelenmis uyumluluk cercevesi"
+  benefit_cost: "Ticari ITSM cozumlerine kiyasla onemli maliyet tasarrufu"
+  benefit_automation: "Manuel BT yonetimini azaltan otomatik is akislari"
+  benefit_reporting: "Operasyonel raporlar araciligiyla veriye dayali karar alma"
+  comparison_title: "Ticari Alternatif Karsilastirmasi"
+  comparison_intro: >
+    Acik kaynakli GLPI platformu, onde gelen ticari ITSM cozumleriyle
+    karsilastirildigi islevsellik sunmakta olup toplam sahip olma
+    maliyeti onemli olcude daha dusuktur.
+  comparison_header_feature: "Ozellik"
+  comparison_header_glpi: "GLPI (Acik Kaynak)"
+  comparison_header_commercial: "Ticari ITSM"
+  comparison_license: "Lisans Maliyeti"
+  comparison_license_glpi: "Ucretsiz (GPL v3)"
+  comparison_license_commercial: "Ajan basina aylik 30 — 150 $"
+  comparison_itam: "Varlik Yonetimi"
+  comparison_itam_glpi: "Dahil (ajanli)"
+  comparison_itam_commercial: "Genellikle ayri modul"
+  comparison_isms: "ISO 27001 Entegrasyonu"
+  comparison_isms_glpi: "Yapilandirma-kod olarak"
+  comparison_isms_commercial: "Satici firma bazinda degisir"
+
+cost:
+  title: "Maliyet Analizi"
+  intro: >
+    GLPI uygulamasinin toplam sahip olma maliyeti; altyapi,
+    kurulum ve devam eden bakim giderlerini icermektedir.
+  infrastructure_title: "Altyapi Maliyetleri"
+  deployment_title: "Kurulum Maliyetleri"
+  maintenance_title: "Yillik Bakim"
+  total_title: "Toplam Ilk Yil Maliyeti"
+  savings_title: "Ticari Cozume Kiyasla Yillik Tasarruf"
+  savings_intro: >
+    Esit ozelliklere sahip ticari bir ITSM cozumu ile karsilastirildiginda,
+    {company_name} onemli yillik tasarruf saglamaktadir.
+
+conclusion:
+  title: "Sonuc ve Oneriler"
+  intro: >
+    GLPI ITSM uygulamasi, {company_name} sirketine hizmet sunumu,
+    varlik takibi ve bilgi guvenligi gereksinimlerini karsilayan
+    kapsamli bir BT yonetim platformu saglamaktadir.
+  achievements_title: "Temel Basarilar"
+  achievement_1: "Tam islevsel ITIL uyumlu hizmet masasi"
+  achievement_2: "Yasam dongusu yonetimi ile eksiksiz BT varlik envanteri"
+  achievement_3: "Belgelenmis kontrollerle ISO 27001 uyumlu guvenlik cercevesi"
+  achievement_4: "Olay, degisiklik ve kullanici yonetimi icin otomatik is akislari"
+  achievement_5: "Ticari alternatiflere gore onemli tasarruf saglayan uygun maliyetli cozum"
+  next_steps_title: "Onerilen Sonraki Adimlar"
+  next_1: "ISO 27001 kontrol kapsamini ek Ek A alanlarini icerecek sekilde genisletin"
+  next_2: "Otomatik guvenlik acigi tarama entegrasyonu uygulayin"
+  next_3: "Gercek zamanli envanter icin tum uc nokta cihazlarina GLPI Agent konuslandirin"
+  next_4: "Duzenli erisim gozden gecirme dongulerini (ucaylik) olusturun"
+  next_5: "ISO 27001 on sertifikasyon hazirlik icin dahili denetim planlayin"
+  next_6: "GLPI platformu icin kullanici egitim programi olusturun"
+  closing: >
+    Bu alanlara yapilacak surekli yatirimla, {company_name} resmi
+    ISO 27001 sertifikasyonu icin iyi bir konumda olacak ve olgun,
+    denetlenebilir bir BT yonetim ortamini surdurecektir.

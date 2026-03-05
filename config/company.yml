@@ -1,0 +1,27 @@
+# ── Company Configuration ─────────────────────────────────────
+# Customize this file for your organization.
+# All report content is generated from these values.
+
+company:
+  name: "Acme Manufacturing"
+  short_name: "Acme"
+  department: "IT Department"
+  industry: "manufacturing"          # manufacturing | office | healthcare | education
+  timezone: "Europe/Istanbul"
+  language: "en"                     # en | tr | de
+  confidentiality: "Internal — Confidential"
+
+  # Report metadata
+  report:
+    author: "IT Department"
+    version: "2.0"
+    date_format: "%B %d, %Y"
+
+  # Branding colors (hex)
+  branding:
+    primary: "#1a1a2e"
+    secondary: "#16213e"
+    accent: "#0f3460"
+    highlight: "#e94560"
+    success: "#27ae60"
+    warning: "#f39c12"

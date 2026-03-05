@@ -1,0 +1,49 @@
+# ── Factory / Manufacturing Preset ────────────────────────────
+# Ready-to-use configuration for a manufacturing facility.
+# Copy this to config/company.yml and customize.
+
+company:
+  name: "Acme Manufacturing"
+  short_name: "Acme"
+  department: "IT Department"
+  industry: "manufacturing"
+  timezone: "Europe/Istanbul"
+  language: "en"
+  confidentiality: "Internal — Confidential"
+
+  report:
+    author: "IT Department"
+    version: "2.0"
+
+  branding:
+    primary: "#1a1a2e"
+    secondary: "#16213e"
+    accent: "#0f3460"
+    highlight: "#e94560"
+    success: "#27ae60"
+    warning: "#f39c12"
+
+# Factory-specific extras
+production:
+  has_mes: true
+  has_erp: true
+  has_scada: false
+  shift_work: true
+  critical_systems:
+    - "MES Production Server"
+    - "ERP Server"
+
+# Factory-specific location additions
+extra_locations:
+  - zone: "Production"
+    rooms:
+      - "CNC Workshop"
+      - "Assembly Line"
+      - "Welding Station"
+      - "Paint Shop"
+      - "Quality Control Lab"
+  - zone: "Warehouse"
+    rooms:
+      - "Raw Materials"
+      - "Finished Goods"
+      - "Shipping Dock"
