@@ -47,10 +47,10 @@ dev = [
 glpi-toolkit = "glpi_toolkit.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/erdemozyurt/glpi-isms-toolkit"
-Repository = "https://github.com/erdemozyurt/glpi-isms-toolkit"
-Issues = "https://github.com/erdemozyurt/glpi-isms-toolkit/issues"
-Documentation = "https://github.com/erdemozyurt/glpi-isms-toolkit/tree/main/docs"
+Homepage = "https://github.com/ozyurterdem/glpi-isms-toolkit"
+Repository = "https://github.com/ozyurterdem/glpi-isms-toolkit"
+Issues = "https://github.com/ozyurterdem/glpi-isms-toolkit/issues"
+Documentation = "https://github.com/ozyurterdem/glpi-isms-toolkit/tree/main/docs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/glpi_toolkit"]

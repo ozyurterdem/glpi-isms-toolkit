@@ -37,7 +37,7 @@ pip install glpi-isms-toolkit
 Or from source:
 
 ```bash
-git clone https://github.com/erdemozyurt/glpi-isms-toolkit.git
+git clone https://github.com/ozyurterdem/glpi-isms-toolkit.git
 cd glpi-isms-toolkit
 pip install -e .
 ```
@@ -256,7 +256,7 @@ Contributions are welcome! Please:
 ### Development Setup
 
 ```bash
-git clone https://github.com/erdemozyurt/glpi-isms-toolkit.git
+git clone https://github.com/ozyurterdem/glpi-isms-toolkit.git
 cd glpi-isms-toolkit
 pip install -e ".[dev]"
 pytest
