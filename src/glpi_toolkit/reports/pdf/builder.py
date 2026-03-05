@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-import os
 from datetime import datetime
 from functools import partial
 from pathlib import Path
-from typing import Any
 
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Flowable
 
+from glpi_toolkit.core.config import ToolkitConfig
 from glpi_toolkit.reports.pdf.components import header_footer
 from glpi_toolkit.reports.pdf.styles import ReportStyles
 from glpi_toolkit.reports.pdf.sections.cover import CoverSection
@@ -29,8 +28,8 @@ class PDFReportBuilder:
 
     Parameters
     ----------
-    config : dict
-        Merged configuration data from all YAML files.
+    config : ToolkitConfig
+        Validated configuration from all YAML files.
     strings : dict
         Localised string map (keys referenced by each section).
     output_dir : str | Path
@@ -39,7 +38,7 @@ class PDFReportBuilder:
 
     def __init__(
         self,
-        config: dict[str, Any],
+        config: ToolkitConfig,
         strings: dict[str, str],
         output_dir: str | Path,
     ) -> None:
@@ -47,15 +46,16 @@ class PDFReportBuilder:
         self.strings = strings
         self.output_dir = Path(output_dir)
 
-        # Resolve branding overrides
-        branding = config.get("company", {}).get("branding", {})
-        self.styles = ReportStyles(color_overrides=branding if branding else None)
+        # Resolve branding overrides from typed config
+        branding = config.company.branding
+        branding_dict = branding.model_dump()
+        self.styles = ReportStyles(color_overrides=branding_dict)
 
     def _output_path(self) -> Path:
         """Generate timestamped output filename."""
         self.output_dir.mkdir(parents=True, exist_ok=True)
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        company_short = self.config.get("company", {}).get("short_name", "report")
+        company_short = self.config.company.short_name or "report"
         return self.output_dir / f"{company_short}_ISMS_Report_{ts}.pdf"
 
     def _build_doc(self, path: Path) -> BaseDocTemplate:
@@ -77,8 +77,8 @@ class PDFReportBuilder:
             id="main",
         )
 
-        company_name = self.config.get("company", {}).get("name", "")
-        confidentiality = self.config.get("company", {}).get("confidentiality", "")
+        company_name = self.config.company.name
+        confidentiality = self.config.company.confidentiality
         report_title = self.strings.get("cover_title", "")
 
         on_page = partial(

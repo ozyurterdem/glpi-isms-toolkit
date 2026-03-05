@@ -17,6 +17,15 @@ from pptx.util import Cm, Pt, Emu
 
 from .theme import SlideTheme
 
+__all__ = [
+    "set_slide_bg",
+    "add_text_box",
+    "add_bullet_list",
+    "add_table",
+    "add_section_header",
+    "add_kpi_card",
+]
+
 
 # ── Background ────────────────────────────────────────────────────────────────
 

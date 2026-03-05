@@ -8,6 +8,8 @@ from typing import Any
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
 
+__all__ = ["SlideTheme"]
+
 
 def _hex_to_rgb(hex_str: str) -> RGBColor:
     """Convert a hex colour string (e.g. '#1a1a2e') to an RGBColor."""

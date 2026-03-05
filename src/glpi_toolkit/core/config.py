@@ -350,6 +350,40 @@ def _load_yaml_optional(path: Path) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
+def _parse_list(raw: dict[str, Any], key: str, model: type[BaseModel]) -> list[Any]:
+    """Parse a list of dicts from *raw[key]* into a list of *model* instances."""
+    return [model(**item) for item in raw.get(key, [])]
+
+
+def _parse_sla(raw: dict[str, Any]) -> SLAConfig:
+    """Build an SLAConfig from raw YAML data with its nested structure."""
+    sla_block = raw.get("sla", {})
+    return SLAConfig(
+        standard=sla_block.get("standard", "itil_v4"),
+        levels={k: SLALevel(**v) for k, v in sla_block.get("levels", {}).items()},
+        ola=OLAConfig(**raw["ola"]) if "ola" in raw else OLAConfig(),
+        calendar=CalendarConfig(**raw["calendar"]) if "calendar" in raw else CalendarConfig(),
+    )
+
+
+def _parse_security(raw: dict[str, Any]) -> SecurityConfig:
+    """Build a SecurityConfig from raw YAML data with its nested structure."""
+    return SecurityConfig(
+        password_policy=PasswordPolicy(**raw.get("password_policy", {})),
+        account_lockout=AccountLockout(**raw.get("account_lockout", {})),
+        session=SessionConfig(**raw.get("session", {})),
+        profiles=_parse_list(raw, "profiles", SecurityProfile),
+    )
+
+
+def _parse_iso27001(raw: dict[str, Any]) -> ISO27001Config:
+    """Build an ISO27001Config from raw YAML data with its nested structure."""
+    return ISO27001Config(
+        controls=_parse_list(raw, "controls", ISOControl),
+        totals=ISOTotals(**raw["totals"]) if "totals" in raw else ISOTotals(),
+    )
+
+
 def load_config(config_dir: str | Path) -> ToolkitConfig:
     """Load and validate all configuration YAML files from *config_dir*.
 
@@ -386,58 +420,38 @@ def load_config(config_dir: str | Path) -> ToolkitConfig:
     company_raw = _load_yaml(company_path)
     company = CompanyConfig(**company_raw.get("company", company_raw))
 
-    # -- optional files ----------------------------------------------------
-    sla_raw = _load_yaml_optional(config_dir / "sla.yml")
-    sla = SLAConfig(
-        standard=sla_raw.get("sla", {}).get("standard", "itil_v4"),
-        levels={
-            k: SLALevel(**v) for k, v in sla_raw.get("sla", {}).get("levels", {}).items()
-        },
-        ola=OLAConfig(**sla_raw.get("ola", {})) if "ola" in sla_raw else OLAConfig(),
-        calendar=CalendarConfig(**sla_raw.get("calendar", {})) if "calendar" in sla_raw else CalendarConfig(),
-    )
+    # -- optional files (simple list-based configs) ------------------------
+    _opt = _load_yaml_optional  # short alias
 
-    cat_raw = _load_yaml_optional(config_dir / "categories.yml")
-    categories = [CategoryConfig(**c) for c in cat_raw.get("categories", [])]
+    simple_lists: dict[str, tuple[str, str, type[BaseModel]]] = {
+        # field_name: (filename, yaml_key, model_class)
+        "categories":     ("categories.yml",     "categories", CategoryConfig),
+        "templates":      ("templates.yml",      "templates",  TemplateConfig),
+        "knowledge_base": ("knowledge_base.yml", "categories", KBCategory),
+        "business_rules": ("business_rules.yml", "rules",      BusinessRule),
+        "locations":      ("locations.yml",      "locations",  LocationZone),
+    }
 
-    sec_raw = _load_yaml_optional(config_dir / "security.yml")
-    security = SecurityConfig(
-        password_policy=PasswordPolicy(**sec_raw.get("password_policy", {})),
-        account_lockout=AccountLockout(**sec_raw.get("account_lockout", {})),
-        session=SessionConfig(**sec_raw.get("session", {})),
-        profiles=[SecurityProfile(**p) for p in sec_raw.get("profiles", [])],
-    )
+    parsed_lists: dict[str, list[Any]] = {}
+    for field, (filename, yaml_key, model_cls) in simple_lists.items():
+        raw = _opt(config_dir / filename)
+        parsed_lists[field] = _parse_list(raw, yaml_key, model_cls)
 
-    tpl_raw = _load_yaml_optional(config_dir / "templates.yml")
-    templates = [TemplateConfig(**t) for t in tpl_raw.get("templates", [])]
-
-    kb_raw = _load_yaml_optional(config_dir / "knowledge_base.yml")
-    knowledge_base = [KBCategory(**c) for c in kb_raw.get("categories", [])]
-
-    asset_raw = _load_yaml_optional(config_dir / "assets.yml")
-    assets = AssetsConfig(**asset_raw) if asset_raw else AssetsConfig()
-
-    rules_raw = _load_yaml_optional(config_dir / "business_rules.yml")
-    business_rules = [BusinessRule(**r) for r in rules_raw.get("rules", [])]
-
-    loc_raw = _load_yaml_optional(config_dir / "locations.yml")
-    locations = [LocationZone(**z) for z in loc_raw.get("locations", [])]
-
-    iso_raw = _load_yaml_optional(config_dir / "iso27001.yml")
-    iso27001 = ISO27001Config(
-        controls=[ISOControl(**c) for c in iso_raw.get("controls", [])],
-        totals=ISOTotals(**iso_raw.get("totals", {})) if "totals" in iso_raw else ISOTotals(),
-    )
+    # -- optional files (structured configs) -------------------------------
+    sla_raw = _opt(config_dir / "sla.yml")
+    asset_raw = _opt(config_dir / "assets.yml")
+    sec_raw = _opt(config_dir / "security.yml")
+    iso_raw = _opt(config_dir / "iso27001.yml")
 
     return ToolkitConfig(
         company=company,
-        sla=sla,
-        categories=categories,
-        security=security,
-        templates=templates,
-        knowledge_base=knowledge_base,
-        assets=assets,
-        business_rules=business_rules,
-        locations=locations,
-        iso27001=iso27001,
+        sla=_parse_sla(sla_raw),
+        categories=parsed_lists["categories"],
+        security=_parse_security(sec_raw),
+        templates=parsed_lists["templates"],
+        knowledge_base=parsed_lists["knowledge_base"],
+        assets=AssetsConfig(**asset_raw) if asset_raw else AssetsConfig(),
+        business_rules=parsed_lists["business_rules"],
+        locations=parsed_lists["locations"],
+        iso27001=_parse_iso27001(iso_raw),
     )

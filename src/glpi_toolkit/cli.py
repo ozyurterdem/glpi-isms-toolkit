@@ -163,12 +163,12 @@ def report(
         with console.status(f"[bold blue]Generating {fmt.upper()} report..."):
             try:
                 if fmt == "pdf":
-                    from glpi_toolkit.reports.pdf import generate_pdf  # type: ignore[attr-defined]
+                    from glpi_toolkit.reports.pdf import generate_pdf
                     outfile = output_dir / f"{company_name.lower().replace(' ', '_')}_report.pdf"
                     generate_pdf(config_dir=config_dir, output_path=outfile, language=language)
                     console.print(f"  [green]PDF saved:[/green] {outfile}")
                 elif fmt == "pptx":
-                    from glpi_toolkit.reports.pptx import generate_pptx  # type: ignore[attr-defined]
+                    from glpi_toolkit.reports.pptx import generate_pptx
                     outfile = output_dir / f"{company_name.lower().replace(' ', '_')}_report.pptx"
                     generate_pptx(config_dir=config_dir, output_path=outfile, language=language)
                     console.print(f"  [green]PPTX saved:[/green] {outfile}")
@@ -203,11 +203,12 @@ def iso_audit(
 ) -> None:
     """Run ISO 27001:2022 gap analysis against your GLPI configuration."""
     config_dir = _resolve_config_dir(config)
-    iso_config = _load_yaml(config_dir / "iso27001.yml")
 
+    from glpi_toolkit.core.config import load_config
     from glpi_toolkit.iso27001.mapper import ISO27001Mapper
 
-    mapper = ISO27001Mapper(iso_config)
+    toolkit_config = load_config(config_dir)
+    mapper = ISO27001Mapper(toolkit_config.iso27001)
 
     # ── Summary table ─────────────────────────────────────────────────────
     summary = mapper.get_coverage_summary()
@@ -488,7 +489,7 @@ def validate(
             passed.append(f"iso27001.yml: {len(controls)} controls mapped")
 
             # Check for valid statuses
-            valid_statuses = {"covered", "partial", "uncovered"}
+            valid_statuses = {"covered", "partial", "not_covered", "uncovered"}
             for ctrl in controls:
                 ctrl_id = ctrl.get("id", "???")
                 status = ctrl.get("status", "")
@@ -571,74 +572,28 @@ def logo(
         "-o",
         help="Output directory for branding assets.",
     ),
+    theme: str = typer.Option(
+        "dark",
+        "--theme",
+        "-t",
+        help="Color theme: dark, light, or grey.",
+    ),
 ) -> None:
-    """Generate simple branding assets (logo placeholder, favicon) for reports."""
+    """Generate branding assets (logo, sidebar, icon, favicon) for GLPI."""
     output_dir = _ensure_output_dir(output)
 
     try:
-        from PIL import Image, ImageDraw, ImageFont
+        from glpi_toolkit.branding.generator import LogoGenerator
     except ImportError:
-        err_console.print(
-            "[red]Error:[/red] Pillow is required for logo generation. "
-            "Install with: pip install Pillow"
-        )
+        err_console.print("[red]Error:[/red] Pillow is required. Install with: pip install Pillow")
         raise typer.Exit(code=1)
 
     with console.status("[bold blue]Generating branding assets..."):
-        # ── Logo (800x200) ────────────────────────────────────────────────
-        logo_w, logo_h = 800, 200
-        img = Image.new("RGBA", (logo_w, logo_h), (26, 26, 46, 255))  # #1a1a2e
-        draw = ImageDraw.Draw(img)
+        gen = LogoGenerator(name, str(output_dir))
+        outputs = gen.generate_all(theme=theme)
 
-        # Try to use a system font, fall back to default
-        font_size = 48
-        try:
-            font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", font_size)
-        except (OSError, IOError):
-            try:
-                font = ImageFont.truetype("arial.ttf", font_size)
-            except (OSError, IOError):
-                font = ImageFont.load_default()
-
-        # Center text
-        bbox = draw.textbbox((0, 0), name, font=font)
-        text_w = bbox[2] - bbox[0]
-        text_h = bbox[3] - bbox[1]
-        x = (logo_w - text_w) // 2
-        y = (logo_h - text_h) // 2
-
-        draw.text((x, y), name, fill=(255, 255, 255, 255), font=font)
-
-        logo_path = output_dir / "logo.png"
-        img.save(str(logo_path), "PNG")
-        console.print(f"  [green]Logo saved:[/green]    {logo_path}")
-
-        # ── Favicon (64x64) ───────────────────────────────────────────────
-        fav_size = 64
-        fav = Image.new("RGBA", (fav_size, fav_size), (26, 26, 46, 255))
-        fav_draw = ImageDraw.Draw(fav)
-
-        # Use first letter(s) as favicon
-        initials = "".join(word[0].upper() for word in name.split()[:2])
-        fav_font_size = 28
-        try:
-            fav_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", fav_font_size)
-        except (OSError, IOError):
-            try:
-                fav_font = ImageFont.truetype("arial.ttf", fav_font_size)
-            except (OSError, IOError):
-                fav_font = ImageFont.load_default()
-
-        bbox = fav_draw.textbbox((0, 0), initials, font=fav_font)
-        text_w = bbox[2] - bbox[0]
-        text_h = bbox[3] - bbox[1]
-        x = (fav_size - text_w) // 2
-        y = (fav_size - text_h) // 2
-        fav_draw.text((x, y), initials, fill=(233, 69, 96, 255), font=fav_font)  # #e94560
-
-        fav_path = output_dir / "favicon.png"
-        fav.save(str(fav_path), "PNG")
-        console.print(f"  [green]Favicon saved:[/green] {fav_path}")
+    for asset_name, path in outputs.items():
+        console.print(f"  [green]{asset_name}:[/green] {path}")
 
     console.print("\n[bold green]Branding assets generated.[/bold green]")
 
